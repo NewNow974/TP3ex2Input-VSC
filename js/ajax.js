@@ -1,7 +1,10 @@
 
 function updateTime(date){
-    document.getElementById('detail').innerHTML = date;
-    console.log(date);
+    /*document.getElementById('detail').innerHTML = date;*/
+    //console.log(date);
+    document.getElementById("title").innerHTML = date[0];
+    document.getElementById("detail").innerHTML = " hours :" +date[1]["hours"] + "<br>" + "minutes : " + date[1]["minutes"] + "<br>" + " secondes : " + date[1]["seconds"] + "<br>";
+    
 }
 
 function errorsMSG(status){
@@ -32,7 +35,15 @@ function ajaxRequest(type, url, callback)
             break;
             case 503: errorsMSG('Service indisponible');
             break;
-            case 200 : callback(xhr.responseText);
+            case 200 :
+            let data = xhr.responseText;
+            //console.log( data);  
+            let decod = JSON.parse(data);
+            console.log(decod);
+            callback(decod);
+            displayClock(decod[1]);
+            
+            
             break;
             default : console.log('HTTP error:'+ xhr.status); 
         }
